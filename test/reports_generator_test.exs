@@ -62,7 +62,7 @@ defmodule ReportsGeneratorTest do
         |> ReportsGenerator.build()
         |> ReportsGenerator.fetch_highest_spender_or_most_sold("users")
 
-      expected_response = {:ok, "5", 49}
+      expected_response = {:ok, {"5", 49}}
 
       assert response == expected_response
     end
@@ -73,7 +73,7 @@ defmodule ReportsGeneratorTest do
         |> ReportsGenerator.build()
         |> ReportsGenerator.fetch_highest_spender_or_most_sold("foods")
 
-      expected_response = {:ok, "esfirra", 3}
+      expected_response = {:ok, {"esfirra", 3}}
 
       assert response == expected_response
     end
