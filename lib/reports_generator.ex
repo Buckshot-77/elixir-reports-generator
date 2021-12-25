@@ -21,7 +21,7 @@ defmodule ReportsGenerator do
   end
 
   def fetch_highest_spender_or_most_sold(report, option) when option in @options do
-    Enum.max_by(report[option], fn {_key, value} -> value end)
+    {:ok, Enum.max_by(report[option], fn {_key, value} -> value end)}
   end
 
   def fetch_highest_spender_or_most_sold(_report, _option), do: {:error, "Invalid option!"}
