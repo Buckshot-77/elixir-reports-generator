@@ -15,9 +15,16 @@ defmodule ReportsGenerator do
   @options ["foods", "users"]
 
   def build(filename) do
-    filename
-    |> Parser.parse_file()
-    |> Enum.reduce(report_accumulator(), fn line, report -> sum_values(line, report) end)
+    result =
+      filename
+      |> Parser.parse_file()
+      |> Enum.reduce(report_accumulator(), fn line, report -> sum_values(line, report) end)
+
+    {:ok, result}
+  end
+
+  def build_from_many(filename_list) when not is_list(filename_list) do
+    {:error, "Please provide a list containing the file paths to be read."}
   end
 
   def build_from_many(filename_list) do
@@ -28,13 +35,13 @@ defmodule ReportsGenerator do
     end)
   end
 
-  def fetch_highest_spender_or_most_sold(report, option) when option in @options do
+  def fetch_highest_spender_or_most_sold({:ok, report}, option) when option in @options do
     {:ok, Enum.max_by(report[option], fn {_key, value} -> value end)}
   end
 
   def fetch_highest_spender_or_most_sold(_report, _option), do: {:error, "Invalid option!"}
 
-  defp sum_reports(%{"users" => users1, "foods" => foods1}, %{
+  defp sum_reports({:ok, %{"users" => users1, "foods" => foods1}}, %{
          "users" => users2,
          "foods" => foods2
        }) do
