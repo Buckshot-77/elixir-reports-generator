@@ -1,6 +1,18 @@
 # ReportsGenerator
 
-**TODO: Add description**
+The project generates a report containing the most consumed food and the client who spent the most, taking the data from files which are included in the project.
+
+Running
+```elixir
+ReportsGenerator.build("report_complete.csv")
+```
+will build the report using a single process for it
+
+And running
+```elixir
+ReportsGenerator.build_from_many(["report_1.csv", "report_2.csv", "report_3.csv"])
+```
+will build the report using one process for each file, but still resulting in a single report at the end.
 
 ## Installation
 
